@@ -193,19 +193,16 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const [category, setCategory] = useState("jewelry");
+  const [category, setCategory] = useState("");
   const {userId, setUserId} = useContext(UserType);
   const [selectedAddress, setSelectedAddress] = useState("");
   console.log(selectedAddress);
-  const [items, setItems] = useState([
-    {label: "Men's Clothing", value: "Men's Clothing"},
-    {label: "Jewelry", value: "Jewelry"},
-    {label: "Electronics", value: "Electronics"},
-    {label: "Women's Clothing", value: "Women's Clothing"}
-
-
-  ]);
-
+ const [items, setItems] = useState([
+  { label: "Men's Clothing", value: "men's clothing" },
+  { label: "Jewelry", value: "jewelery" },      // API spells it "jewelery"
+  { label: "Electronics", value: "electronics" },
+  { label: "Women's Clothing", value: "women's clothing" },
+]);
 
 
 
@@ -323,7 +320,7 @@ const HomeScreen = () => {
         <Text style={{height: 1, borderColor: "#D0D0D0", borderWidth: 2, marginTop: 15}}>
               
         </Text>
-        <View style={{marginHorizontal: 10, marginTop: 20, width: "45%", marginBottom: open?120:15}}>
+       
          {/* <DropDownPicker style={{borderColor: "#B7B7B7", height: 30, marginBottom: open?120:15}}
             open = {open} 
             value = {category}
@@ -337,22 +334,40 @@ const HomeScreen = () => {
             
             />
             */}
-
-        <View style={{flexDirection: "row", flexWrap: "wrap"}}>
-          {items.map((item, index)=>(
-          <TouchableOpacity 
-          key = {index}
-          onPress={()=>setCategory(item.value)}
-          style={{padding: 8, backgroundColor: category === item.value?"grey":"white"}}>
-            <Text style={{color: category === item.value?"white":"black"}}>
-              {item.label}
-            </Text>
-          </TouchableOpacity>
-          ))}
-        </View>
+<View style={{
+  flexDirection: "row",
+  flexWrap: "wrap",
+  marginHorizontal: 10,
+  marginTop: 20,
+}}>
+  {items.map((item, index) => (
+    <TouchableOpacity
+      key={index}
+      onPress={() => setCategory(item.value)}
+      style={{
+        width: "22%",
+        minHeight: 45,
+        margin: "1.5%",
+        backgroundColor: category === item.value ? "grey" : "white",
+        borderWidth: 1,
+        borderColor: "#D0D0D0",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 5,
+      }}>
+      <Text style={{
+        color: category === item.value ? "white" : "black",
+        textAlign: "center",
+        fontSize: 12,
+      }}>
+        {item.label}
+      </Text>
+    </TouchableOpacity>
+  ))}
+</View>
         </View>
         
-        </View>
+       
 
         <View
           style={{
@@ -361,9 +376,12 @@ const HomeScreen = () => {
           flexWrap: "wrap",
         }}>
         {products
-        ?.map((item, index) => (
-         <ProductItem item={item} key={index} />
-          ))}
+  ?.filter((item) => 
+    category === "" ? true : item.category.toLowerCase() === category.toLowerCase()
+  )
+  .map((item, index) => (
+    <ProductItem item={item} key={index} />
+  ))}
         </View>        
       </ScrollView>
      {/* <BottomModal onBackdropPress={()=>setModelVisible(!modelVisible)}

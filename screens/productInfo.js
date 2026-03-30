@@ -27,7 +27,7 @@ const productInfo = () => {
 
 
   return (
-    <ScrollView style={{flex: 1, marginTop: 50, backgroundColor: "white"}} showsVerticalScrollIndicator = {false}>
+    <ScrollView style={{flex: 1, marginTop: 10, backgroundColor: "white"}} showsVerticalScrollIndicator = {false}>
         <View style={{backgroundColor: "#00CED1", padding: 10, flexDirection: "row", alignItems: "center"}}>
             <TouchableOpacity style={{flexDirection: "row", alignItems: "center", gap: 10, backgroundColor: "white", borderRadius: 3, height: 38, marginHorizontal: 7, flex: 1}}>
                 <AntDesign name="search1" size={22} color="black" style={{paddingLeft: 10}}/>
